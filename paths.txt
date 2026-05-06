@@ -1,0 +1,10 @@
+# gplog example paths
+# Coordinates: integers 0..16384  (8192 = center)
+# Each line is one path: [x0,y0, x1,y1, ...]
+
+# Rectangle
+[1000,1000, 1000,15384, 15384,15384, 15384,1000, 1000,1000]
+
+# X cross
+[1000,1000, 15384,15384]
+[15384,1000, 1000,15384]
