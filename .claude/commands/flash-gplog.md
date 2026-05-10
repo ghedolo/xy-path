@@ -1,15 +1,17 @@
 Build and flash the gplog firmware to the RP2040.
 
-Usage: /flash-gplog [paths_file]
+Usage: /flash-gplog [path]
 
-If a paths file argument is provided ($ARGUMENTS), use it as the paths source.
-If no argument is given, use the default paths.txt in the project root.
+If a path argument is provided ($ARGUMENTS), use it as the paths source.
+The path can be absolute or relative to the project root — it is NOT assumed to be inside vect/.
+If no argument is given, all vect/*.txt files are used.
 
 Follow these steps exactly, in order:
 
 ## 1. Determine paths file
 
-If $ARGUMENTS is non-empty, use it as PATHS_FILE. Otherwise use the project default (no -DPATHS_FILE needed).
+If $ARGUMENTS is non-empty, use it verbatim as PATHS_FILE (absolute or relative path as-is).
+Otherwise use the project default (no -DPATHS_FILE needed, all vect/*.txt are used).
 
 ## 2. Build
 

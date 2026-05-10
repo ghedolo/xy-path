@@ -2,13 +2,12 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define DRAW_STEPS  4
-
 #define Z_ON   0x80000000u
 #define Z_OFF  0x00000000u
 
-volatile int z_offset     = 20;
-volatile int flyback_steps = 10;
+volatile int z_offset      = 18;
+volatile int flyback_steps =  8;
+volatile int draw_steps    =  2;
 
 static inline uint32_t pack_xy(int32_t x, int32_t y) {
     if (x >  32767) x =  32767; else if (x < -32767) x = -32767;
@@ -62,7 +61,7 @@ void render_paths(frame_t *f, const path_t *paths, int n_paths) {
         for (int i = 1; i < path->n && pos < SAMPLES_PER_FRAME; i++) {
             int32_t px1 = path->pts[i][0];
             int32_t py1 = path->pts[i][1];
-            pos = write_segment(f, pos, cx, cy, px1, py1, DRAW_STEPS, true);
+            pos = write_segment(f, pos, cx, cy, px1, py1, draw_steps, true);
             cx = px1; cy = py1;
         }
     }

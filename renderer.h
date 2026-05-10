@@ -17,5 +17,6 @@ typedef struct {
 
 extern volatile int z_offset;
 extern volatile int flyback_steps;
+extern volatile int draw_steps;
 
 void render_paths(frame_t *f, const path_t *paths, int n_paths);

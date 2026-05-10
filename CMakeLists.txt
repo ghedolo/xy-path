@@ -9,16 +9,28 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-# Paths file: override with -DPATHS_FILE=/path/to/file.txt
-set(PATHS_FILE "${CMAKE_SOURCE_DIR}/paths.txt" CACHE STRING "Vector paths input file")
+set(PATHS_FILE "" CACHE STRING "Single paths file to render (absolute or relative to project root). If empty, all vect/*.txt are used.")
+
+if(PATHS_FILE)
+    if(IS_ABSOLUTE "${PATHS_FILE}")
+        set(ACTIVE_FILES "${PATHS_FILE}")
+    else()
+        set(ACTIVE_FILES "${CMAKE_SOURCE_DIR}/${PATHS_FILE}")
+    endif()
+    set(PATHS_COMMENT "Generating paths_data.h from ${PATHS_FILE}")
+else()
+    file(GLOB ACTIVE_FILES "${CMAKE_SOURCE_DIR}/vect/*.txt")
+    list(SORT ACTIVE_FILES)
+    set(PATHS_COMMENT "Generating paths_data.h from vect/*.txt")
+endif()
 
 add_custom_command(
     OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/paths_data.h
     COMMAND python3 ${CMAKE_SOURCE_DIR}/tmp/gen_paths_h.py
-                    ${PATHS_FILE}
                     ${CMAKE_CURRENT_BINARY_DIR}/paths_data.h
-    DEPENDS ${PATHS_FILE} ${CMAKE_SOURCE_DIR}/tmp/gen_paths_h.py
-    COMMENT "Generating paths_data.h from ${PATHS_FILE}"
+                    ${ACTIVE_FILES}
+    DEPENDS ${ACTIVE_FILES} ${CMAKE_SOURCE_DIR}/tmp/gen_paths_h.py
+    COMMENT "${PATHS_COMMENT}"
 )
 add_custom_target(gplog_paths_h DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/paths_data.h)
 

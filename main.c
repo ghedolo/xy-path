@@ -1,4 +1,3 @@
-#include <math.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,9 +22,10 @@
 
 #define SAMPLE_RATE 96000
 
-#define DEF_SCALE    32000.0f
-#define DEF_FLYBACK  10
-#define DEF_Z_OFFSET 20
+#define DEF_SCALE      32000.0f
+#define DEF_FLYBACK     8
+#define DEF_Z_OFFSET   18
+#define DEF_DRAW_STEPS  2
 
 static float g_scale = DEF_SCALE;
 
@@ -175,6 +175,7 @@ static void print_help(void) {
     printf("  +/-   z_offset  (%d, 0-60)\n",        z_offset);
     printf("  a/z   scale     (%.0f, 2000-32767)\n", g_scale);
     printf("  d/c   flyback   (%d, 1-40)\n",         flyback_steps);
+    printf("  s/x   draw_steps(%d, 1-16)\n",         draw_steps);
     printf("  r     reset defaults\n");
     printf("  h     this help\n");
     printf("  paths: %d loaded\n", n_raw_paths);
@@ -208,6 +209,7 @@ int main(void) {
             z_offset      = DEF_Z_OFFSET;
             g_scale       = DEF_SCALE;
             flyback_steps = DEF_FLYBACK;
+            draw_steps    = DEF_DRAW_STEPS;
             scale_paths();
             print_help();
         } else if (ch == '+' || ch == '=') {
@@ -222,12 +224,16 @@ int main(void) {
             if (flyback_steps < 40) flyback_steps++;
         } else if (ch == 'c') {
             if (flyback_steps > 1)  flyback_steps--;
+        } else if (ch == 's') {
+            if (draw_steps < 16) draw_steps++;
+        } else if (ch == 'x') {
+            if (draw_steps > 1)  draw_steps--;
         } else {
             changed = false;
         }
 
         if (changed && ch != 'r' && ch != 'h') {
-            printf("z=%d  sc=%.0f  fb=%d\n", z_offset, g_scale, flyback_steps);
+            printf("z=%d  sc=%.0f  fb=%d  ds=%d\n", z_offset, g_scale, flyback_steps, draw_steps);
         }
 
         if (swap_pending) {
