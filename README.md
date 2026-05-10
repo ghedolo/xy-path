@@ -14,6 +14,10 @@ RP2040 firmware that plays arbitrary 2D vector paths on an analog oscilloscope u
 DAC left output → oscilloscope X input  
 DAC right output → oscilloscope Y input
 
+## Example
+
+![space.txt rendered on oscilloscope](space_osc.jpg)
+
 ## Path file format
 
 ```
@@ -25,6 +29,8 @@ DAC right output → oscilloscope Y input
 
 - Empty lines and lines starting with `#` are ignored
 - Each path is drawn with beam on; flyback between paths has beam off (Z blanking)
+
+Path files can be generated from images or SVGs with [contour2vec](https://github.com/ghedalo/contour2vec).
 
 ## Build
 
