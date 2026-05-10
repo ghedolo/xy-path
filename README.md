@@ -16,7 +16,7 @@ DAC right output → oscilloscope Y input
 
 ## Example
 
-![space.txt rendered on oscilloscope](space_osc.jpg)
+![space.txt rendered on oscilloscope](material/space_osc.jpg)
 
 ## Path file format
 
@@ -96,6 +96,18 @@ Defaults: `z_offset=18`, `scale=32000`, `flyback=8`, `draw_steps=2`.
 **`flyback`** — number of interpolation steps used to move the beam from the end of one path to the start of the next (beam off). More steps = slower, smoother repositioning. Too few may cause a visible streak if the DAC slews slowly.
 
 **`draw_steps`** — number of interpolation steps between consecutive points inside a path (beam on). More steps = smoother lines at the cost of drawing speed; fewer steps = faster refresh but potentially choppy segments if points are far apart.
+
+## Curiosity
+
+Ever wondered what waveform the DAC actually outputs to draw a picture on an oscilloscope — and what that signal sounds like when played through a speaker?
+
+Here is the raw I2S output of the `space.txt` example, captured on a scope and recorded as audio:
+
+[![waveform](material/space_wave.jpg)](material/space_wave.jpg)
+
+[▶ Listen to the sound](material/space_soud.ogg)
+
+The X and Y deflection signals are just stereo audio. The oscilloscope is, in a sense, a speaker that draws instead of vibrating.
 
 ## Development effort
 
