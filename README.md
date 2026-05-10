@@ -132,7 +132,7 @@ The X and Y deflection signals are just stereo audio. The oscilloscope is, in a 
 | First commit | 2026-05-06 |
 | Last commit | 2026-05-10 |
 | Calendar span | ~4 days |
-| Commits | 1 |
+| Commits | 8 |
 | Development tool | Claude Code (Anthropic) |
 
 ### Source metrics
