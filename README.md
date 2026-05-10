@@ -39,6 +39,28 @@ To use a custom paths file:
 cmake ../.. -DCMAKE_TOOLCHAIN_FILE=../../toolchain-xpack.cmake -DPATHS_FILE=/path/to/file.txt
 ```
 
+## Flashing
+
+### Normal (via run.sh)
+
+```
+./run.sh [optional/paths/file.txt]
+```
+
+Builds and flashes in one step. No button press needed.
+
+### With serial port busy
+
+If a terminal is already connected to the USB CDC port, the standard 1200-baud trick fails. Use `picotool` instead — it reboots into BOOTSEL even with the port occupied:
+
+```
+picotool reboot -f -u
+# wait for /Volumes/RPI-RP2 to appear, then:
+cp tmp/build/gplog.uf2 /Volumes/RPI-RP2/
+```
+
+Or just use the `/flash-gplog` slash command in Claude Code — it always uses `picotool`.
+
 ## Slash commands
 
 | Command | Effect |
@@ -55,10 +77,44 @@ cmake ../.. -DCMAKE_TOOLCHAIN_FILE=../../toolchain-xpack.cmake -DPATHS_FILE=/pat
 | `a` | Increase scale (+500, max 32767) |
 | `z` | Decrease scale (−500, min 2000) |
 | `d` / `c` | Flyback steps ±1 (1–40) |
+| `s` / `x` | Draw steps ±1 (1–16) |
 | `r` | Reset all to defaults |
 | `h` | Print help |
 
-Defaults: `z_offset=20`, `scale=32000`, `flyback=10`.
+Defaults: `z_offset=18`, `scale=32000`, `flyback=8`, `draw_steps=2`.
+
+### Parameter reference
+
+**`z_offset`** — number of audio samples by which the Z blanking signal is delayed relative to XY. Compensates for the oscilloscope's analog blanking latency: without this delay the beam turns on slightly before the DAC has settled at the target position, leaving a bright dot at the start of each path.
+
+**`flyback`** — number of interpolation steps used to move the beam from the end of one path to the start of the next (beam off). More steps = slower, smoother repositioning. Too few may cause a visible streak if the DAC slews slowly.
+
+**`draw_steps`** — number of interpolation steps between consecutive points inside a path (beam on). More steps = smoother lines at the cost of drawing speed; fewer steps = faster refresh but potentially choppy segments if points are far apart.
+
+## Development effort
+
+### Timeline & commits
+
+| | |
+|---|---|
+| First commit | 2026-05-06 |
+| Last commit | 2026-05-10 |
+| Calendar span | ~4 days |
+| Commits | 1 |
+| Development tool | Claude Code (Anthropic) |
+
+### Source metrics
+
+| File | Lines |
+|---|---|
+| `main.c` | 245 |
+| `renderer.c` | 80 |
+| `renderer.h` | 22 |
+| `audio_i2s.pio` | 67 |
+| `run.sh` | 57 |
+| `flash.sh` | 53 |
+| `tmp/gen_paths_h.py` | 32 |
+| **Total** | **576** |
 
 ## License and Credits
 

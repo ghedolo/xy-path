@@ -1,20 +1,25 @@
 #!/bin/bash
 set -e
 
-UF2="${1:-$(dirname "$0")/tmp/build/icosaedro.uf2}"
+UF2="${1:-$(dirname "$0")/tmp/build/gplog.uf2}"
+
+if [[ "$UF2" != *.uf2 ]]; then
+    echo "Error: '$UF2' is not a .uf2 file"
+    exit 1
+fi
 
 if [ ! -f "$UF2" ]; then
-    echo "UF2 non trovato: $UF2"
+    echo "UF2 not found: $UF2"
     exit 1
 fi
 
 PORT=$(ls /dev/cu.usbmodem* 2>/dev/null | head -1)
 if [ -z "$PORT" ]; then
-    echo "Nessuna porta usbmodem trovata"
+    echo "No usbmodem port found"
     exit 1
 fi
 
-echo "Reset 1200 baud su $PORT..."
+echo "1200 baud reset on $PORT..."
 python3 - "$PORT" <<'PYEOF'
 import sys, os, termios, time
 port = sys.argv[1]
@@ -30,7 +35,7 @@ except Exception as e:
     print(f"serial: {e}")
 PYEOF
 
-echo "Attendo RPI-RP2 (max 15s)..."
+echo "Waiting for RPI-RP2 (max 15s)..."
 for i in $(seq 1 30); do
     if [ -d /Volumes/RPI-RP2 ]; then
         break
@@ -39,10 +44,10 @@ for i in $(seq 1 30); do
 done
 
 if [ ! -d /Volumes/RPI-RP2 ]; then
-    echo "Timeout: RPI-RP2 non trovato."
+    echo "Timeout: RPI-RP2 not found."
     exit 1
 fi
 
-echo "Copio $(basename "$UF2") -> /Volumes/RPI-RP2/"
+echo "Copying $(basename "$UF2") -> /Volumes/RPI-RP2/"
 cp "$UF2" /Volumes/RPI-RP2/
-echo "Flash completato."
+echo "Flash done."
