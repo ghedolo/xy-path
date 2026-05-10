@@ -103,7 +103,13 @@ Ever wondered what waveform the DAC actually outputs to draw a picture on an osc
 
 Here is the raw I2S output of the `space.txt` example, captured on a scope and recorded as audio:
 
-[![waveform](material/space_wave.jpg)](material/space_wave.jpg)
+Single frame — one X trace and one Y trace:
+
+[![single waveform](material/space_wave.jpg)](material/space_wave.jpg)
+
+Multiple frames overlapped — shows the overall signal shape across the whole drawing:
+
+[![multi waveform](material/space_waveMutli.jpg)](material/space_waveMutli.jpg)
 
 [▶ Listen to the sound](material/space_soud.ogg)
 
