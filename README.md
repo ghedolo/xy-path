@@ -115,6 +115,14 @@ Multiple frames overlapped — shows the overall signal shape across the whole d
 
 The X and Y deflection signals are just stereo audio. The oscilloscope is, in a sense, a speaker that draws instead of vibrating.
 
+## License and Credits
+
+**License:** GPL-3.0-or-later
+
+**Author:** ghedo (luca.ghedini@gmail.com) — 2026
+
+**Development Tool:** The project was constructed using Claude Code by Anthropic.
+
 ## Development effort
 
 ### Timeline & commits
@@ -139,11 +147,3 @@ The X and Y deflection signals are just stereo audio. The oscilloscope is, in a 
 | `flash.sh` | 53 |
 | `tmp/gen_paths_h.py` | 32 |
 | **Total** | **576** |
-
-## License and Credits
-
-**License:** GPL-3.0-or-later
-
-**Author:** ghedo (luca.ghedini@gmail.com) — 2026
-
-**Development Tool:** The project was constructed using Claude Code by Anthropic.
