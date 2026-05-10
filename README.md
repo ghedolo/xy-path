@@ -30,7 +30,7 @@ DAC right output → oscilloscope Y input
 - Empty lines and lines starting with `#` are ignored
 - Each path is drawn with beam on; flyback between paths has beam off (Z blanking)
 
-Path files can be generated from images or SVGs with [contour2vec](https://github.com/ghedalo/contour2vec).
+Path files can be generated from raster images with [contour2vec](https://github.com/ghedolo/contour2vec).
 
 ## Build
 
