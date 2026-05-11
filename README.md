@@ -20,7 +20,7 @@ The RP2040 GP5 output is 3.3 V logic; most oscilloscopes expect 5 V on the Z inp
 
 **Components:** 2N2222 (or any small NPN), two 1 kΩ resistors, +5 V supply (e.g. USB VBUS).
 
-![Z-axis level shifter schematic](material/Z_axis_leveShifter.png)
+<img src="material/Z_axis_leveShifter.png" width="360" alt="Z-axis level shifter schematic">
 
 When GP5 is HIGH the transistor saturates and pulls the collector low; when GP5 is LOW the 1 kΩ pull-up brings the output to +5 V. The signal is therefore inverted — the firmware drives GP5 HIGH during flyback (beam off) and LOW during drawing (beam on), which maps correctly to the oscilloscope's active-low Z blanking input.
 
