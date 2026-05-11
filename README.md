@@ -14,6 +14,16 @@ RP2040 firmware that plays arbitrary 2D vector paths on an analog oscilloscope u
 DAC left output → oscilloscope X input  
 DAC right output → oscilloscope Y input
 
+## Z-axis level shifter
+
+The RP2040 GP5 output is 3.3 V logic; most oscilloscopes expect 5 V on the Z input for reliable blanking. A minimal NPN open-collector stage solves this.
+
+**Components:** 2N2222 (or any small NPN), two 1 kΩ resistors, +5 V supply (e.g. USB VBUS).
+
+![Z-axis level shifter schematic](material/Z_axis_leveShifter.png)
+
+When GP5 is HIGH the transistor saturates and pulls the collector low; when GP5 is LOW the 1 kΩ pull-up brings the output to +5 V. The signal is therefore inverted — the firmware drives GP5 HIGH during flyback (beam off) and LOW during drawing (beam on), which maps correctly to the oscilloscope's active-low Z blanking input.
+
 ## Example
 
 ![space.txt rendered on oscilloscope](material/space_osc.jpg)
@@ -130,9 +140,9 @@ The X and Y deflection signals are just stereo audio. The oscilloscope is, in a 
 | | |
 |---|---|
 | First commit | 2026-05-06 |
-| Last commit | 2026-05-10 |
-| Calendar span | ~4 days |
-| Commits | 8 |
+| Last commit | 2026-05-11 |
+| Calendar span | ~5 days |
+| Commits | 11 |
 | Development tool | Claude Code (Anthropic) |
 
 ### Source metrics
@@ -146,4 +156,4 @@ The X and Y deflection signals are just stereo audio. The oscilloscope is, in a 
 | `run.sh` | 57 |
 | `flash.sh` | 53 |
 | `tmp/gen_paths_h.py` | 32 |
-| **Total** | **576** |
+| **Total** | **556** |
